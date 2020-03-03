@@ -1,0 +1,139 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #c2cbc0;
+}
+
+.main-header__nav {
+  width: 100%;
+  height: 3.5rem;
+  background-color: #283441;
+  display: flex;
+  align-items: center;
+  box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.4);
+  margin-bottom: 2rem;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.main-header__item-list {
+  display: flex;
+  text-decoration: none;
+  color: #eee;
+  /* width: 100%; */
+  /* width: 100%; */
+  list-style-type: none;
+  align-items: center;
+  margin: 0;
+}
+
+.main-header__item {
+  /* display: flex; */
+  text-decoration: none;
+  list-style: none;
+  background-color: inherit;
+  color: #eee;
+  margin-right: 1rem;
+  border: none;
+  font-size: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.main-header__item:hover,
+.main-header__item:active {
+  color: hotpink;
+} 
+
+a {
+  color: #eee;
+  text-decoration: none;
+}
+
+a:hover,
+a:active {
+  color: hotpink;
+}
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {}
+.product-item {
+  text-align: center;
+  background-color: #eee;
+  border-radius: 0.8rem;
+  box-shadow: 4px 4px 8px rgb(0, 0, 0, 0.3);
+  margin: 1rem;
+}
+
+.card__header {
+}
+
+.product__title {}
+
+.card__image img {
+  width: 300px;
+  height: 300px;
+}
+
+.card__content {}
+
+.product__price {}
+
+.product__description {}
+
+.card__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  outline: none;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  background-color: #283441;
+  color: #eee;
+  margin: 1rem;
+  box-shadow: 1px 1px 3px rgb(0, 0, 0, 0.2);
+  font-size: inherit;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: goldenrod;
+  color: #eee;
+}
+
+.centered {
+  text-align: center;
+}
+
+hr {
+  margin-bottom: 1.5rem;
+}
+
+.user-message {
+  margin: auto;
+  width: 60%;
+  border: 1px solid #097ddb;
+  background-color: #6cb1f7;
+  padding: 1rem;
+  border-radius: 3px;
+}
+
+.user-message__error {
+  border: 1px solid #cd2b2c;
+  background-color: #f66e6e;
+}
+
+/* .product-list__btn {
+  margin: 1rem;
+} */

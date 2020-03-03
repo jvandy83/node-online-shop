@@ -1,0 +1,14 @@
+.cart {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  outline: none;
+  width: 80%;
+  margin: 1rem auto;
+  background-color: #eee;
+  box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.3);
+}
+
+hr {
+  margin: 1rem 0;
+}

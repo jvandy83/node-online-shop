@@ -1,0 +1,58 @@
+main {
+  display: flex;
+  justify-content: center;
+  /* align-content: center; */
+}
+
+.product-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.form-control {
+  /* display: flex;
+  justify-content: center; */
+  margin: 0.5rem;
+  color: #283441;
+}
+label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.1rem;
+  letter-spacing: 1.2px;
+}
+
+input {
+  width: 18rem;
+  font-size: 1.2rem;
+  outline: none;
+  border: none;
+  padding: 0.2rem;
+  background-color: #eee;
+  box-shadow: inset 1px 2px 6px rgb(0, 0, 0, 0.3);
+  border: 0.4px solid rgb(0, 0, 0, 0.1);
+}
+
+textarea {
+  background-color: #eee;
+  font-size: 1.2rem;
+  box-shadow: inset 1px 2px 6px rgb(0, 0, 0, 0.3);
+  border: 0.4px solid rgb(0, 0, 0, 0.1);
+  width: 18rem;
+  outline: none;
+  border: none;
+}
+
+.form__button {
+  margin-top: 1rem;
+  width: 18rem;
+  font-size:1.1rem;
+  outline: none;
+  border: none;
+}
+
+
