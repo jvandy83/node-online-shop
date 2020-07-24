@@ -28,28 +28,23 @@
       <% } %>
     </div>
       <section class="pagination">
-        <% if (currentPage !== 1 && previousPage !== 1) { %>
-          <a class="pagination-link" href="/admin/products/?page=1">1</a>
-        <% } %>
-        <% if (hasPreviousPage) { %> 
-        <a class="pagination-link" href="/admin/products/?page=<%= previousPage %>">
-          <%= previousPage %>
-        </a>
-        <% } %>
-        <a class="pagination-link active" href="/admin/products/?page=<%= currentPage %>">
-          <%= currentPage %>
-        </a>
-        <% if (hasNextPage) { %>
-            <a class="pagination-link" href="/admin/products/?page=<%= nextPage %>">
-              <%= nextPage %>
-            </a>
-        <% } %>
-        <% if (lastPage !== currentPage && nextPage !== lastPage) { %>
-            <a class="pagination-link" href="/admin/products/?page=<%= lastPage %>"><%= lastPage %>
-            </a>
+        <% if (pages > 0) { %>
+          <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+          <% if (i !== 1) { %>
+            <div class="pagination-list__item"><a class="pagination-link">...</a></div>
+          <% } %>
+          <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+            <% if (i == current) { %>
+              <div class="pagination-list__item"><a class="pagination-link active"><%= i %></a></div>
+            <% } else { %>
+              <div pagination-link-list__item><a class="pagination-link" href="/products/?page=<%= i %>"><%= i %></a></div>
+            <% } %>
+            <% if (i == Number(current) + 4 && i < pages) { %>
+                <div class="pagination-list__item"><a class="pagination-link" >...</a></div>
+            <% } %>
+          <% } %>
         <% } %>
       </section>
-      <div class="pagination-link__action">&lt;&lt;     &gt;&gt;</div>
       <% } else { %>
       <h1>No products...</h1>
       <% } %>

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
+// @ts-ignore
 const stripe = require('stripe')(`sk_test_D4pNByx08dJpJShCHbDp79Y70007pq01Qn`);
 const PDFDocument = require('pdfkit');
 
@@ -12,79 +12,61 @@ const ITEMS_PER_PAGE = 2;
 
 exports.getIndex = (req, res, next) => {
   const page = Number(req.query.page) || 1;
-  console.log(page);
-  let totalItems;
-  Product.find()
-    .countDocuments()
-    .then(numProducts => {
-      totalItems = numProducts;
-      return Product.find()
-        .skip(ITEMS_PER_PAGE * (page - 1))
-        .limit(ITEMS_PER_PAGE)
-        .then(products => {
-          res.render('shop/index', {
-            pageTitle: 'Shop',
-            path: '/',
+  Product.find({})
+    .skip(ITEMS_PER_PAGE * page - ITEMS_PER_PAGE)
+    .limit(ITEMS_PER_PAGE)
+    .exec((err, products) => {
+      return (
+        // @ts-ignore
+        Product.countDocuments().exec((err, count) => {
+          if (err) return next(err);
+          res.render('shop/product-list', {
+            pageTitle: 'Product List',
+            path: '/product-list',
             products: products,
-            currentPage: page,
-            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-            hasPreviousPage: page > 1,
-            nextPage: page + 1,
-            previousPage: page - 1,
-            lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+            current: page,
+            // @ts-ignore
+            pages: Math.ceil(count / ITEMS_PER_PAGE)
           });
         })
-        .catch(err => {
-          const error = new Error(err);
-          error.httpStatusCode = 500;
-          return next(error);
-        });
+      );
     });
 };
 
 exports.getProducts = (req, res, next) => {
   const page = Number(req.query.page) || 1;
-  console.log(page);
-  let totalItems;
-  Product.find()
-    .countDocuments()
-    .then(numProducts => {
-      totalItems = numProducts;
-      return Product.find()
-        .skip(ITEMS_PER_PAGE * (page - 1))
-        .limit(ITEMS_PER_PAGE)
-        .then(products => {
+  Product.find({})
+    .skip(ITEMS_PER_PAGE * page - ITEMS_PER_PAGE)
+    .limit(ITEMS_PER_PAGE)
+    .exec((err, products) => {
+      return (
+        // @ts-ignore
+        Product.countDocuments().exec((err, count) => {
+          if (err) return next(err);
           res.render('shop/product-list', {
             pageTitle: 'Product List',
             path: '/product-list',
             products: products,
-            currentPage: page,
-            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-            hasPreviousPage: page > 1,
-            nextPage: page + 1,
-            previousPage: page - 1,
-            lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+            current: page,
+            // @ts-ignore
+            pages: Math.ceil(count / ITEMS_PER_PAGE)
           });
         })
-        .catch(err => {
-          const error = new Error(err);
-          error.httpStatusCode = 500;
-          return next(error);
-        });
+      );
     });
 };
 
 exports.getProductDetail = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
-    .then(product => {
+    .then((product) => {
       res.render('shop/product-details', {
         pageTitle: 'Details',
         path: '/product-detail',
         product: product
       });
     })
-    .catch(err => {
+    .catch((err) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
@@ -92,11 +74,11 @@ exports.getProductDetail = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-  User.findById(req.session.user._id).then(user => {
+  User.findById(req.session.user._id).then((user) => {
     user
       .populate('cart.items.productId')
       .execPopulate()
-      .then(user => {
+      .then((user) => {
         const products = user.cart.items;
         res.render('shop/cart', {
           products: products,
@@ -104,7 +86,7 @@ exports.getCart = (req, res, next) => {
           path: '/cart'
         });
       })
-      .catch(err => {
+      .catch((err) => {
         const error = new Error(err);
         error.httpStatusCode = 500;
         return next(error);
@@ -114,15 +96,15 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   let prodId = req.body.productId;
-  User.findById(req.session.user._id).then(user => {
+  User.findById(req.session.user._id).then((user) => {
     Product.findById(prodId)
-      .then(product => {
+      .then((product) => {
         return user.addToCart(product);
       })
-      .then(result => {
+      .then((result) => {
         res.redirect('/cart');
       })
-      .catch(err => {
+      .catch((err) => {
         const error = new Error(err);
         error.httpStatusCode = 500;
         return next(error);
@@ -132,13 +114,13 @@ exports.postCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  User.findById(req.session.user._id).then(user => {
+  User.findById(req.session.user._id).then((user) => {
     user
       .removeFromCart(prodId)
-      .then(result => {
+      .then((result) => {
         res.redirect('/cart');
       })
-      .catch(err => {
+      .catch((err) => {
         const error = new Error(err);
         error.httpStatusCode = 500;
         return next(error);
@@ -154,19 +136,19 @@ exports.getCheckout = (req, res, next) => {
   const success = '/checkout/success';
   const cancel = '/checkout/cancel';
 
-  User.findById(req.session.user._id).then(user => {
+  User.findById(req.session.user._id).then((user) => {
     user
       .populate('cart.items.productId')
       .execPopulate()
-      .then(user => {
+      .then((user) => {
         products = user.cart.items;
-        products.forEach(p => {
+        products.forEach((p) => {
           total += p.productId.price;
         });
         return stripe.checkout.sessions
           .create({
             payment_method_types: ['card'],
-            line_items: products.map(p => {
+            line_items: products.map((p) => {
               return {
                 name: p.productId.title,
                 description: p.productId.description,
@@ -178,7 +160,7 @@ exports.getCheckout = (req, res, next) => {
             success_url: protocol + '://' + host + success,
             cancel_url: protocol + '://' + host + cancel
           })
-          .then(session => {
+          .then((session) => {
             user.clearCart();
             res
               .render('shop/checkout', {
@@ -188,7 +170,7 @@ exports.getCheckout = (req, res, next) => {
                 totalSum: total.toFixed(2),
                 sessionId: session.id
               })
-              .catch(err => {
+              .catch((err) => {
                 const error = new Error(err);
                 error.httpStatusCode = 500;
                 return next(error);
@@ -199,13 +181,13 @@ exports.getCheckout = (req, res, next) => {
 };
 
 exports.getCheckoutSuccess = (req, res, next) => {
-  User.findById(req.session.user._id).then(user => {
+  User.findById(req.session.user._id).then((user) => {
     user
       .populate('cart.items.productId')
       .execPopulate()
-      .then(user => {
+      .then((user) => {
         const prods = user.cart.items;
-        products = prods.map(i => {
+        products = prods.map((i) => {
           return { quantity: i.quantity, product: { ...i.productId._doc } };
         });
         const order = new Order({
@@ -220,7 +202,7 @@ exports.getCheckoutSuccess = (req, res, next) => {
       .then(() => {
         res.redirect('/orders');
       })
-      .catch(err => {
+      .catch((err) => {
         const error = new Error(err);
         error.httpStatusCode = 500;
         return next(error);
@@ -230,14 +212,14 @@ exports.getCheckoutSuccess = (req, res, next) => {
 
 exports.getOrder = (req, res, next) => {
   Order.find({ 'user.userId': req.session.user._id })
-    .then(orders => {
+    .then((orders) => {
       res.render('shop/orders', {
         pageTitle: 'Your Order',
         path: '/orders',
         orders: orders
       });
     })
-    .catch(err => {
+    .catch((err) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
@@ -247,7 +229,7 @@ exports.getOrder = (req, res, next) => {
 exports.getInvoice = (req, res, next) => {
   const orderId = req.params.orderId;
   Order.findById(orderId)
-    .then(order => {
+    .then((order) => {
       if (!order) {
         return next(new Error('No order found!'));
       }
@@ -283,7 +265,7 @@ exports.getInvoice = (req, res, next) => {
 
       let totalPrice = 0;
 
-      order.products.forEach(prod => {
+      order.products.forEach((prod) => {
         totalPrice += prod.quantity * prod.product.price;
         pdfDoc
           .fontSize(14)
@@ -309,9 +291,25 @@ exports.getInvoice = (req, res, next) => {
       // );
       // file.pipe(res);
     })
-    .catch(err => {
+    .catch((err) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
     });
 };
+
+// .skip(ITEMS_PER_PAGE * (page - 1))
+// .limit(ITEMS_PER_PAGE)
+// .then((products) => {
+//   res.render('shop/product-list', {
+//     pageTitle: 'Product List',
+//     path: '/product-list',
+//     products: products,
+//     currentPage: page,
+//     hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+//     hasPreviousPage: page > 1,
+//     nextPage: page + 1,
+//     previousPage: page - 1,
+//     lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+//   });
+// })

@@ -48,12 +48,12 @@ body {
 .main-header__item:active a,
 .main-header__item a.active {
   color: hotpink;
-} 
+}
 
 .main-header__item:hover button,
 .main-header__item:active button {
   color: hotpink;
-} 
+}
 
 a {
   color: #eee;
@@ -64,9 +64,12 @@ a {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  min-height: 78vh;
 }
 
-.card {}
+.card {
+  max-width: 600px;
+}
 .product-item {
   text-align: center;
   background-color: #eee;
@@ -76,27 +79,34 @@ a {
 }
 
 .card__header {
+  padding: 0 0.5rem;
 }
 
-.product__title {}
+.product__title {
+}
 
 .card__image img {
   /* width: 300px; */
   height: 300px;
 }
 
-.card__content {}
+.card__content {
+}
 
 .product__price {
   /* border: 2px solid #a4b51e;s */
   background-color: rgb(0, 0, 0, 0.3);
-  width: 80%;
   margin: 1rem auto;
   border-radius: 3px;
+  display: inline-block;
+  padding: 0.2rem;
 }
 
 .product__description {
   font-size: 1.1rem;
+  padding: 0.5rem 1.5rem;
+  width: 70%;
+  margin: auto;
 }
 
 .card__actions {

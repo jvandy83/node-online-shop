@@ -68,10 +68,10 @@ exports.postAddProduct = (req, res, next) => {
   }
   product
     .save()
-    .then(result => {
+    .then((result) => {
       return res.redirect('/products');
     })
-    .catch(err => {
+    .catch((err) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
@@ -82,32 +82,22 @@ const ITEMS_PER_PAGE = 2;
 
 exports.getProducts = (req, res, next) => {
   const page = Number(req.query.page) || 1;
-  let totalItems;
   Product.find({ userId: req.session.user._id })
-    .countDocuments()
-    .then(numProducts => {
-      totalItems = numProducts;
-      return Product.find()
-        .skip(ITEMS_PER_PAGE * (page - 1))
-        .limit(ITEMS_PER_PAGE)
-        .then(products => {
-          res.render('admin/products', {
-            pageTitle: 'Admin Products',
-            path: '/admin/products',
-            products: products,
-            currentPage: page,
-            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-            hasPreviousPage: page > 1,
-            nextPage: page + 1,
-            previousPage: page - 1,
-            lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
-          });
-        })
-        .catch(err => {
-          const error = new Error(err);
-          error.httpStatusCode = 500;
-          return next(error);
+    .skip(ITEMS_PER_PAGE * page - ITEMS_PER_PAGE)
+    .limit(ITEMS_PER_PAGE)
+    .exec((err, products) => {
+      // @ts-ignore
+      Product.countDocuments().exec((err, count) => {
+        if (err) return next(err);
+        res.render('admin/products', {
+          pageTitle: 'Admin Products',
+          path: '/admin/products',
+          products: products,
+          current: page,
+          // @ts-ignore
+          pages: Math.ceil(count / ITEMS_PER_PAGE)
         });
+      });
     });
 };
 
@@ -115,7 +105,7 @@ exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   const prodId = req.params.productId;
   Product.findById(prodId)
-    .then(product => {
+    .then((product) => {
       res.render('admin/edit-product', {
         pageTitle: 'Edit Product',
         path: '/admin/edit-product',
@@ -126,7 +116,7 @@ exports.getEditProduct = (req, res, next) => {
         hasError: false
       });
     })
-    .catch(err => {
+    .catch((err) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
@@ -141,7 +131,7 @@ exports.postEditProduct = (req, res, next) => {
   const updatedDescription = req.body.description;
   // extract errors array from express-validation in routes
   const errors = validationResult(req);
-  Product.findById(prodId).then(product => {
+  Product.findById(prodId).then((product) => {
     // extract userId from product along with session user._id
     const prodUserId = product.userId.toString();
     const sessionUserId = req.session.user._id.toString();
@@ -172,10 +162,10 @@ exports.postEditProduct = (req, res, next) => {
       }
       return product
         .save()
-        .then(result => {
+        .then((result) => {
           return res.redirect('/admin/products');
         })
-        .catch(err => {
+        .catch((err) => {
           const error = new Error(err);
           error.httpStatusCode = 500;
           return next(error);
@@ -187,7 +177,7 @@ exports.postEditProduct = (req, res, next) => {
 exports.deleteProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
-    .then(product => {
+    .then((product) => {
       if (!product) {
         return next(new Error('Product not found.'));
       }
@@ -198,14 +188,31 @@ exports.deleteProduct = (req, res, next) => {
         userId: req.session.user._id
       });
     })
-    .then(result => {
+    .then((result) => {
       res.status(200).json({
         message: 'Success'
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: 'Delete product failed!'
       });
     });
 };
+
+// return Product.find()
+//   .skip(ITEMS_PER_PAGE * (page - 1))
+//   .limit(ITEMS_PER_PAGE)
+//   .then((products) => {
+//     res.render('admin/products', {
+//       pageTitle: 'Admin Products',
+//       path: '/admin/products',
+//       products: products,
+//       currentPage: page,
+//       hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+//       hasPreviousPage: page > 1,
+//       nextPage: page + 1,
+//       previousPage: page - 1,
+//       lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+//     });
+//   })
