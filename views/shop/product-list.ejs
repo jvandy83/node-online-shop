@@ -1,4 +1,5 @@
 <%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/pagination.css">
 </head>
 <body>
   <%- include('../includes/navigation.ejs') %>
@@ -11,10 +12,10 @@
             <h1 class="product__title"><%= product.title %></h1>
           </header>
           <div class="card__image">
-            <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+            <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
           </div>
           <div class="card__content">
-            <h3 class="product__price"><%= product.price %></h3>
+            <h3 class="product__price"><span class="dollar-sign">$</span><%= product.price %></h3>
             <p class="product__description"><%= product.description%></p>
           </div>
           <div class="card__actions">
@@ -23,6 +24,30 @@
         </article>
         <% } %>
       </div>
+      <section class="pagination">
+        <% if (currentPage !== 1 && previousPage !== 1) { %>
+            <a class="pagination-link" href="/products/?page=1">1</a>
+        <% } %>
+        <% if (hasPreviousPage) { %> 
+            <a class="pagination-link" href="/products/?page=<%= previousPage %>">
+              <%= previousPage %>
+            </a>
+        <% } %>
+          <a class="pagination-link active" href="/products/?page=<%= currentPage %>">
+            <%= currentPage %>
+          </a>
+        <% if (hasNextPage) { %>
+            <a class="pagination-link" href="/products/?page=<%= nextPage %>">
+              <%= nextPage %>
+            </a>
+        <% } %>
+        <% if (lastPage !== currentPage && nextPage !== lastPage) { %>
+            <a class="pagination-link" href="/products/?page=<%= lastPage %>">
+              <%= lastPage %>
+            </a>
+          <% } %>
+        </section>
+        <div class="pagination-link__action">&lt;&lt;     &gt;&gt;</div>
       <% } else { %>
       <h1>No products...</h1>
       <% } %>

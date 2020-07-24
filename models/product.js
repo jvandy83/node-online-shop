@@ -6,7 +6,7 @@ const productSchema = new Schema({
   title: {
     type: String,
     require: true
-  }, 
+  },
   price: {
     type: Number,
     require: true
@@ -23,7 +23,7 @@ const productSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   }
-})
+});
 
 module.exports = mongoose.model('Product', productSchema);
 
@@ -44,7 +44,7 @@ module.exports = mongoose.model('Product', productSchema);
 //     const db = getDb();
 //     let dbOp;
 //     if (this._id) {
-//       dbOp = db 
+//       dbOp = db
 //         .collection('products')
 //         .updateOne(
 //           {_id: this._id},
@@ -64,7 +64,6 @@ module.exports = mongoose.model('Product', productSchema);
 //       .catch(err => console.log(err));
 //   }
 
-
 //   static fetchAll() {
 //     const db = getDb();
 //     return db
@@ -76,7 +75,7 @@ module.exports = mongoose.model('Product', productSchema);
 //         return products;
 //       })
 //       .catch(err => console.log(err));
-//   } 
+//   }
 
 //   static findById(id) {
 //     const db = getDb();
@@ -95,7 +94,7 @@ module.exports = mongoose.model('Product', productSchema);
 //   static deleteById(id) {
 //     const db = getDb();
 //     return db.collection('products')
-//       .deleteOne({ 
+//       .deleteOne({
 //         _id: new mongodb.ObjectId(id)
 //       })
 //       .then(result => {

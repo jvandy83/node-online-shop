@@ -11,22 +11,27 @@
           <div class="cart__title">
             <h2 class="cart__title"><%= product.productId.title %></h2>
           </div>
-            <h3 class="cart__qty">Qty: <%= product.quantity %></h3>
-          <form action="/cart/delete-cart-product" method="POST">
-            <button class="btn" type="submit">Delete</button>
-            <input type="hidden" name="productId" value="<%= product._id %>">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          </form>
+          <div class="cart__qty">
+            <h3 >Qty: <%= product.quantity %></h3>
+          </div>
+          <div class="cart-delete__button">
+            <form action="/cart/delete-cart-product" method="POST">
+              <button class="cart-btn" type="submit">Delete</button>
+              <input type="hidden" name="productId" value="<%= product._id %>">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </form>
+          </div>
         </li>
       <% } %>
       </ul>
       <hr>
       <div class="centered">
-        <form action="/create-order" method='POST'>
+        <!-- <form action="/create-order" method='POST'>
           <button class="btn">Order Now</button>
           <input type="hidden" name="<%= product._id %>">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        </form>
+        </form> -->
+        <a class="btn" href="/checkout">Order Now!</a>
       </div>
   <% } else { %>
     <h1>Cart is emtpy...</h1>

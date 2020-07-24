@@ -1,0 +1,20 @@
+.invalid {
+  border: 1px solid #f66e6e;
+  outline: 1px solid #f66e6e;
+}
+
+.user-message {
+  width: 40%;
+  border: 1px solid #097ddb;
+  background-color: #6cb1f7;
+  padding: 0.5rem;
+  border-radius: 3px;
+  margin: 1rem auto;
+}
+
+.user-message__error {
+  text-align: center;
+  border: 1px solid #f66e6e;
+  background-color: #ffaf95;
+  color: darkred;
+}

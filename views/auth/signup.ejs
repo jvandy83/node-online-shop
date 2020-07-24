@@ -1,24 +1,45 @@
 <%- include('../includes/head.ejs') %>
   <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/auth.css">
 </head>
 <body>
   <%- include('../includes/navigation.ejs') %>
-  <% if (errorMessage) { %>
-    <div class="user-message user-message__error"><%= errorMessage %></div>
+  <% if (validationErrors) { %>
+    <% for (e of validationErrors) { %>
+      <div class="user-message user-message__error"><%= e.msg %></div>
+    <% } %>
   <% } %>
   <main>
-    <form action="/signup" method="POST" class="product-form">
+    <form action="/signup" method="POST" class="product-form" novalidate>
       <div class="form-control">
         <label for="email">E-mail</label>
-        <input type="email" name="email">
+        <input 
+          class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
+          type="email" 
+          name="email" 
+          id="email" 
+          value="<%= oldInput.email %> "
+        >
       </div>
       <div class="form-control">
         <label for="password">Password</label>
-        <input type="password" name="password">
+        <input 
+          class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>"
+          type="password" 
+          name="password" 
+          id="password" 
+          value="<%= oldInput.password %>"
+        >
       </div>
       <div class="form-control">
-        <label for="password">Confirm Password</label>
-        <input type="password" name="confirmationPassword">
+        <label for="confirmPassword">Confirm Password</label>
+        <input 
+          class="<%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>"
+          type="password" 
+          name="confirmPassword" 
+          id="confirmPassword" 
+          value="<%= oldInput.confirmPassword %>"
+        >
       </div>
       <button class="btn form__button" type="submit">Sign Up</button>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">

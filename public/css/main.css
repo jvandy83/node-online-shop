@@ -44,8 +44,14 @@ body {
   cursor: pointer;
 }
 
-.main-header__item:hover,
-.main-header__item:active {
+.main-header__item:hover a,
+.main-header__item:active a,
+.main-header__item a.active {
+  color: hotpink;
+} 
+
+.main-header__item:hover button,
+.main-header__item:active button {
   color: hotpink;
 } 
 
@@ -54,14 +60,10 @@ a {
   text-decoration: none;
 }
 
-a:hover,
-a:active {
-  color: hotpink;
-}
 .grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .card {}
@@ -79,15 +81,23 @@ a:active {
 .product__title {}
 
 .card__image img {
-  width: 300px;
+  /* width: 300px; */
   height: 300px;
 }
 
 .card__content {}
 
-.product__price {}
+.product__price {
+  /* border: 2px solid #a4b51e;s */
+  background-color: rgb(0, 0, 0, 0.3);
+  width: 80%;
+  margin: 1rem auto;
+  border-radius: 3px;
+}
 
-.product__description {}
+.product__description {
+  font-size: 1.1rem;
+}
 
 .card__actions {
   display: flex;
@@ -101,15 +111,16 @@ a:active {
   border-radius: 0.3rem;
   background-color: #283441;
   color: #eee;
-  margin: 1rem;
+  margin: 0 1rem 1rem 1rem;
   box-shadow: 1px 1px 3px rgb(0, 0, 0, 0.2);
   font-size: inherit;
+  cursor: pointer;
 }
 
 .btn:hover,
 .btn:active {
-  background-color: goldenrod;
-  color: #eee;
+  background-color: #a4b51e;
+  color: #283441;
 }
 
 .centered {
@@ -120,18 +131,8 @@ hr {
   margin-bottom: 1.5rem;
 }
 
-.user-message {
-  margin: auto;
-  width: 60%;
-  border: 1px solid #097ddb;
-  background-color: #6cb1f7;
-  padding: 1rem;
-  border-radius: 3px;
-}
-
-.user-message__error {
-  border: 1px solid #cd2b2c;
-  background-color: #f66e6e;
+.dollar-sign {
+  color: #007900;
 }
 
 /* .product-list__btn {

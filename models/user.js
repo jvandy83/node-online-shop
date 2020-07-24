@@ -28,20 +28,20 @@ const userSchema = new Schema({
       }
     ]
   }
-})
+});
 
 userSchema.methods.removeFromCart = function(id) {
   const updatedCartItems = this.cart.items.filter(item => {
-    return item._id.toString() !== id.toString()
-  })
+    return item._id.toString() !== id.toString();
+  });
   this.cart.items = updatedCartItems;
   return this.save();
-}
+};
 
 userSchema.methods.addToCart = function(product) {
   const prodIdx = this.cart.items.findIndex(cp => {
     return cp.productId.toString() === product._id.toString();
-  })
+  });
   let newQty = 1;
   const updatedCartItems = [...this.cart.items];
 
@@ -49,18 +49,18 @@ userSchema.methods.addToCart = function(product) {
     newQty = updatedCartItems[prodIdx].quantity + 1;
     updatedCartItems[prodIdx].quantity = newQty;
   } else {
-    updatedCartItems.push({productId: product._id, quantity: newQty } )
+    updatedCartItems.push({ productId: product._id, quantity: newQty });
   }
   const updatedCart = { items: updatedCartItems };
   this.cart = updatedCart;
   return this.save();
-}
+};
 
 userSchema.methods.clearCart = function() {
   this.cart = { items: [] };
   this.save();
-}
-  
+};
+
 module.exports = mongoose.model('User', userSchema);
 
 // const getDb = require('../util/database').getDb;
@@ -90,7 +90,7 @@ module.exports = mongoose.model('User', userSchema);
 //     let newQty = 1;
 //     const updatedCart = { items: [{ productId: new ObjectId(product._id), quantity: newQty }] }
 //     if (!this.cart.items) {
-//       return db 
+//       return db
 //         .collection('users')
 //         .updateOne(
 //           { _id: new ObjectId(this._id)},
@@ -184,7 +184,7 @@ module.exports = mongoose.model('User', userSchema);
 //     //       .insertOne(order)
 //     //       .then(result => {
 //     //         this.cart = { items: [] }
-//     //         return db 
+//     //         return db
 //     //           .collection('users')
 //     //           .updateOne(
 //     //             { _id: new ObjectId(this._id)},
@@ -192,7 +192,7 @@ module.exports = mongoose.model('User', userSchema);
 //     //           )
 //     //       })
 //     //   })
-//     } 
+//     }
 
 //   fetchOrder() {
 //     const db = getDb();
@@ -207,7 +207,7 @@ module.exports = mongoose.model('User', userSchema);
 //     const updatedCartItems = this.cart.items.filter(p => {
 //       return p.productId.toString() !== prodId.toString();
 //     })
-//     return db 
+//     return db
 //       .collection('users')
 //       .updateOne(
 //         { _id: new ObjectId(this._id)},

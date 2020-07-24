@@ -1,9 +1,10 @@
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 
 module.exports = {
-  sendgrid_user: process.env.SENDGRID_USER_NAME,
-  sendgrid_password: process.env.SENDGRID_PASSWORD,
-  sendgrid_sender: process.env.SENDGRID_SENDER,
-  sendgrid_api_key: process.env.SENDGRID_API_KEY
-}
+  SENDGRID_USER: process.env.SENDGRID_USER_NAME,
+  SENDGRID_PASSWORD: process.env.SENDGRID_PASSWORD,
+  SENDGRID_SENDER: process.env.SENDGRID_SENDER,
+  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+  PORT: process.env.PORT,
+  MONGODB_URI: process.env.MONGODB_URI
+};

@@ -1,0 +1,33 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.pagination-link {
+  color: #283441;
+  font-size: 1.5rem;
+  cursor: pointer;
+  /* background-color: goldenrod; */
+  background-color: #c5d434;
+  border-radius: 3px;
+  border: 2px solid #94a611;
+  /* box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5); */
+  margin: 0 1rem;
+  padding: .2rem .5rem;
+}
+
+.pagination a:hover,
+.pagination a:active,
+.pagination a.active {
+  color: hotpink; 
+}
+
+.pagination-link__action {
+  text-align: center;
+  margin: 1rem;
+  font-size: 1.2rem;
+  color: #283441;
+}
+
+
