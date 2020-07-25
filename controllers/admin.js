@@ -1,3 +1,4 @@
+// @ts-nocheck
 const Product = require('../models/product');
 const fileHelper = require('../util/file');
 
@@ -178,6 +179,7 @@ exports.deleteProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then((product) => {
+      console.log(product.imageUrl);
       if (!product) {
         return next(new Error('Product not found.'));
       }

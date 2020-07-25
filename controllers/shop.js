@@ -20,9 +20,9 @@ exports.getIndex = (req, res, next) => {
         // @ts-ignore
         Product.countDocuments().exec((err, count) => {
           if (err) return next(err);
-          res.render('shop/product-list', {
-            pageTitle: 'Product List',
-            path: '/product-list',
+          res.render('shop/index', {
+            pageTitle: 'Index',
+            path: '/',
             products: products,
             current: page,
             // @ts-ignore
