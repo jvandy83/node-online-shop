@@ -60,6 +60,7 @@ exports.getProductDetail = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then((product) => {
+      console.log(product);
       res.render('shop/product-details', {
         pageTitle: 'Details',
         path: '/product-detail',
@@ -67,7 +68,7 @@ exports.getProductDetail = (req, res, next) => {
       });
     })
     .catch((err) => {
-      const error = new Error(err);
+      const error = new Error(err.message);
       error.httpStatusCode = 500;
       return next(error);
     });
@@ -80,6 +81,7 @@ exports.getCart = (req, res, next) => {
       .execPopulate()
       .then((user) => {
         const products = user.cart.items;
+        console.log(products);
         res.render('shop/cart', {
           products: products,
           pageTitle: 'Your Cart',

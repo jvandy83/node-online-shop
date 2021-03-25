@@ -51,9 +51,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(
-//   multer({ storage: fileStorage, fileFilter: fileFilter}).single('image')
-// );
+
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
 );
@@ -66,7 +64,7 @@ app.use(
     secret: 'my secret',
     resave: false,
     saveUninitialized: false,
-    store: store
+    store
   })
 );
 
